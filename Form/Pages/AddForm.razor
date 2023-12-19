@@ -1,0 +1,39 @@
+﻿@page "/AddForm"
+
+<EditForm Model="@formModel" OnValidSubmit="@HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+    <div class="form-group">
+        <label for="FirstName">First Name:</label>
+        <InputText id="FirstName" class="form-control" @bind-Value="formModel.FirstName"/>
+    </div>
+    <div class="form-group">
+        <label for="LastName">Last Name:</label>
+        <InputText id="LastName" class="form-control" @bind-Value="formModel.LastName" />
+    </div>
+    <div class="form-group">
+        <label for="Email">Email:</label>
+        <InputText id="Email" class="form-control" @bind-Value="formModel.Email" />
+    </div>
+    <div class="form-group">
+        <label for="PhoneNumber">PhoneNumber:</label>
+        <InputText id="PhoneNumber" class="form-control" @bind-Value="formModel.PhoneNumber" />
+    </div>
+    <div class="form-group">
+        <label for="Address">Address:</label>
+        <InputText id="Address" class="form-control" @bind-Value="formModel.Address" />
+    </div>
+
+    <input class="btn btn-primary mt-3" type="submit" value="Submit"/>
+</EditForm>
+
+@code{
+    FormModel formModel = new();
+
+    public void HandleSubmit() 
+    {
+        FormServices.SaveDataInJson(formModel);
+        formModel = new();
+        JSRuntime.InvokeVoidAsync("showNotification", "Form submitted successfully!!");
+    }
+}
